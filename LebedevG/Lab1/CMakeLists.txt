@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 project(Lab1)
 set(CMAKE_CXX_STANDARD 17)
 
-# Google Test через FetchContent
 include(FetchContent)
 FetchContent_Declare(
     googletest

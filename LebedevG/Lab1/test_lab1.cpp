@@ -3,7 +3,7 @@
 #include "tbitfield.h"
 #include "tset.h"
 
-// ==================== TBitField ====================
+// TBitField 
 
 TEST(TBitFieldTest, CreateAndLength) {
     TBitField bf(10);
@@ -97,7 +97,7 @@ TEST(TBitFieldTest, StreamOutput) {
     EXPECT_EQ(oss.str(), "1001");
 }
 
-// ==================== TSet ====================
+// Set 
 
 TEST(TSetTest, CreateAndMaxPower) {
     TSet s(10);
