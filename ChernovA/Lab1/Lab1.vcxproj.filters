@@ -18,15 +18,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="tbitfield.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="tset.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header.h">
+    <ClInclude Include="D:\git_repositories\3825B1FIsp1-2_3\includes\Lab1\tbitfield.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="tbitfield.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="tset.h">
+    <ClInclude Include="D:\git_repositories\3825B1FIsp1-2_3\includes\Lab1\tset.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

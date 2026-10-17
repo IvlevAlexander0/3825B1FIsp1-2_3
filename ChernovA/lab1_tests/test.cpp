@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "../Lab1/tbitfield.h"
-#include "../Lab1/tset.h"
+#include "../../includes/Lab1/tbitfield.h"
+#include "../../includes/Lab1/tset.h"
 #include <sstream> //для тестов input/out
 
 //Тесты для tbitfield
@@ -137,7 +137,7 @@ TEST(TBitFieldAssign, assign_different_lengths) {
 TEST(TBitFieldOperations, bit_or) {
 	TBitField a(8);
 	TBitField b(8);
-	a.SetBit(0); 
+	a.SetBit(0);
 	a.SetBit(2);
 	b.SetBit(2);
 	b.SetBit(4);
@@ -156,9 +156,9 @@ TEST(TBitFieldOperations, bit_or) {
 TEST(TBitFieldOperations, bit_and) {
 	TBitField a(8);
 	TBitField b(8);
-	a.SetBit(0); 
+	a.SetBit(0);
 	a.SetBit(2);
-	b.SetBit(2); 
+	b.SetBit(2);
 	b.SetBit(4);
 
 	TBitField c = a & b;

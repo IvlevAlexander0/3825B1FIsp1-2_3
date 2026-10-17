@@ -1,6 +1,6 @@
 #include <iostream>
-#include "tbitfield.h"
-#include "tset.h"
+#include "../../includes/Lab1/tbitfield.h"
+#include "../../includes/Lab1/tset.h"
 
 int main() {
 	TBitField a(8);
