@@ -66,7 +66,7 @@ inline int TBitField::operator==(const TBitField& bf) const {
 }
 
 inline int TBitField::operator!=(const TBitField& bf) const {
-	return !(*this == bf); // Исправлено на логическое отрицание
+	return !(*this == bf);
 }
 
 inline TBitField& TBitField::operator=(const TBitField& bf) {
@@ -149,19 +149,18 @@ inline TBitField TBitField::operator~(void) {
 inline std::istream& operator>>(std::istream& istr, TBitField& bf) {
 	int i = 0;
 	char elem;
+	for (int j = 0; j < bf.BitLen; j++) {
+		bf.ClrBit(j);
+	}
 	while (istr >> elem) {
 		if (elem == '0') {
-			bf.ClrBit(i);
-			i++;
+			bf.ClrBit(i++);
+		}
+		else if (elem == '1') {
+			bf.SetBit(i++);
 		}
 		else {
-			if (elem == '1') {
-				bf.SetBit(i);
-				i++;
-			}
-			else {
-				break;
-			}
+			break;
 		}
 		if (i >= bf.BitLen) {
 			break;

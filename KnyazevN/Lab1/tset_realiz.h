@@ -55,13 +55,19 @@ inline TSet TSet::operator-(const int Elem) {
 }
 
 inline TSet TSet::operator+(const TSet& s) {
-    TSet res(MaxPower > s.MaxPower ? MaxPower : s.MaxPower);
+    if (MaxPower != s.MaxPower) {
+        throw std::logic_error("Different universes");
+    }
+    TSet res(MaxPower);
     res.BitField = BitField | s.BitField;
     return res;
 }
 
 inline TSet TSet::operator*(const TSet& s) {
-    TSet res(MaxPower > s.MaxPower ? MaxPower : s.MaxPower);
+    if (MaxPower != s.MaxPower) {
+        throw std::logic_error("Different universes");
+    }
+    TSet res(MaxPower);
     res.BitField = BitField & s.BitField;
     return res;
 }
@@ -72,7 +78,30 @@ inline TSet TSet::operator~(void) {
 }
 
 inline std::istream& operator>>(std::istream& istr, TSet& s) {
-    istr >> s.BitField;
+    char ch;
+    for (int i = 0; i < s.MaxPower; i++) {
+        s.DelElem(i);
+    }
+
+    if (!(istr >> ch) || ch != '{') {
+        return istr;
+    }
+
+    while (istr >> ch) {
+        if (ch == '}') {
+            break;
+        }
+        if (ch == ',') {
+            continue;
+        }
+        istr.putback(ch);
+        int elem;
+        if (istr >> elem) {
+            if (elem >= 0 && elem < s.MaxPower) {
+                s.InsElem(elem);
+            }
+        }
+    }
     return istr;
 }
 
