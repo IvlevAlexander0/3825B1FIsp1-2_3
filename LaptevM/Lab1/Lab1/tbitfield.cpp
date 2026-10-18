@@ -1,4 +1,4 @@
-#include "tbitfield.h"
+#include "../Lab1/tbitfield.h"
 
 // индекс в pМем для бита n
 int TBitField::GetMemIndex(const int n) const

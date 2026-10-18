@@ -6,15 +6,13 @@
 //ТЕСТЫ TBitField
 
 // Проверка: конструктор задаёт правильную длину поля
-TEST(TBitField, Length)
-{
+TEST(TBitField, Length){
 	TBitField bf(10);
 	EXPECT_EQ(bf.GetLength(), 10);
 }
 
 // Проверка: установка и считывание бита
-TEST(TBitField, SetAndGet)
-{
+TEST(TBitField, SetAndGet){
 	TBitField bf(8);
 
 	bf.SetBit(3);
@@ -26,8 +24,7 @@ TEST(TBitField, SetAndGet)
 }
 
 // Проверка: сравнение двух полей
-TEST(TBitField, Equality)
-{
+TEST(TBitField, Equality){
 	TBitField a(6);
 	TBitField b(6);
 
@@ -41,8 +38,7 @@ TEST(TBitField, Equality)
 }
 
 // Проверка: операции или и не
-TEST(TBitField, BitOperations)
-{
+TEST(TBitField, BitOperations){
 	TBitField a(4);
 	TBitField b(4);
 
@@ -66,8 +62,7 @@ TEST(TBitField, BitOperations)
 }
 
 // Проверка: ввод и вывод 
-TEST(TBitField, InputOutput)
-{
+TEST(TBitField, InputOutput){
 	TBitField a(4);
 	a.SetBit(0);
 	a.SetBit(2);
@@ -79,7 +74,6 @@ TEST(TBitField, InputOutput)
 	TBitField b(4);
 	std::stringstream ss2("1 0 1 0");
 	ss2 >> b;
-
 	EXPECT_EQ(b.GetBit(0), 1);
 	EXPECT_EQ(b.GetBit(1), 0);
 	EXPECT_EQ(b.GetBit(2), 1);
@@ -91,8 +85,7 @@ TEST(TBitField, InputOutput)
 
 
 // Проверка: добавление и удаление
-TEST(TSet, InsertAndDelete)
-{
+TEST(TSet, InsertAndDelete){
 	TSet s(8);
 
 	s.InsElem(3);
@@ -103,8 +96,7 @@ TEST(TSet, InsertAndDelete)
 }
 
 // Проверка: сравнение 
-TEST(TSet, Equality)
-{
+TEST(TSet, Equality){
 	TSet a(6);
 	TSet b(6);
 
@@ -118,8 +110,7 @@ TEST(TSet, Equality)
 }
 
 // Проверка: объединение и пересечение 
-TEST(TSet, UnionAndIntersection)
-{
+TEST(TSet, UnionAndIntersection){
 	TSet a(8);
 	TSet b(8);
 
@@ -139,8 +130,7 @@ TEST(TSet, UnionAndIntersection)
 }
 
 // Проверка: дополнение множества
-TEST(TSet, Complement)
-{
+TEST(TSet, Complement){
 	TSet a(4);
 	a.InsElem(0);
 
@@ -153,8 +143,7 @@ TEST(TSet, Complement)
 }
 
 // Проверка: объединение и разность с элементом
-TEST(TSet, ElementOperations)
-{
+TEST(TSet, ElementOperations){
 	TSet a(5);
 	a.InsElem(1);
 
@@ -165,4 +154,23 @@ TEST(TSet, ElementOperations)
 	TSet c = b - 1;
 	EXPECT_EQ(c.IsMember(1), 0);
 	EXPECT_EQ(c.IsMember(3), 1);
+}
+
+TEST(TSet, InputOutput){
+	TSet a(8);
+	a.InsElem(1);
+	a.InsElem(3);
+	a.InsElem(4);
+
+	std::stringstream ss;
+	ss << a;
+
+	EXPECT_EQ(ss.str(), "1 3 4");
+	TSet b(8);
+	std::stringstream ss2("3 1 3 4");
+	ss2 >> b;
+	EXPECT_EQ(b.IsMember(1), 1);
+	EXPECT_EQ(b.IsMember(2), 0);
+	EXPECT_EQ(b.IsMember(3), 1);
+	EXPECT_EQ(b.IsMember(4), 1);
 }

@@ -1,4 +1,4 @@
-#include "tset.h"
+#include "../Lab1/tset.h"
 
 // cоздаём множество с максимальной мощностью mp
 TSet::TSet(int mp) : BitField(mp)
@@ -121,13 +121,30 @@ TSet TSet::operator~(void)
 // ввод множества 
 std::istream& operator>>(std::istream& istr, TSet& s)
 {
-    istr >> s.BitField;
+    int count;
+    istr >> count; 
+    for (int i = 0; i < s.MaxPower; i++){
+        s.DelElem(i);
+    }
+    for (int i = 0; i < count; i++){
+        int elem;
+        istr >> elem;
+        if (elem >= 0 && elem < s.MaxPower)
+            s.InsElem(elem);
+    }
     return istr;
 }
 
 // вывод множества
-std::ostream& operator<<(std::ostream& ostr, const TSet& s)
-{
-    ostr << s.BitField;
+std::ostream& operator<<(std::ostream& ostr, const TSet& s){
+    bool first = true;
+    for (int i = 0; i < s.MaxPower; i++) {
+        if (s.IsMember(i)) {
+            if (!first) ostr << " ";
+            ostr << i;
+            first = false;
+        }
+    }
     return ostr;
 }
+
