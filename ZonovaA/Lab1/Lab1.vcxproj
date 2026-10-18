@@ -123,11 +123,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="tbitfield.h" />
-    <ClInclude Include="tset.h" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="tbitfield.cpp" />
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="tset.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

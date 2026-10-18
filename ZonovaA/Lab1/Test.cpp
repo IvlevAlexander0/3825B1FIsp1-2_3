@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <sstream>  //тестирование потоков ввода/вывода
-#include "tbitfield.h"
-#include "tset.h"
+#include "../../includes/Lab1/tbitfield.h"
+#include "../../includes/Lab1/tset.h"
 
 using namespace std;
 
