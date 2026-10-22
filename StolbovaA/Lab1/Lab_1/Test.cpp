@@ -175,13 +175,6 @@ TEST(TBitField, Test_Multiple_Bits) {
     }
 }
 
-//операция ИЛИ с разными полями (должно дать исключение)
-TEST(TBitField, Test_Or_Different_Lengths) {
-    TBitField bf1(10);
-    TBitField bf2(20);
-    ASSERT_ANY_THROW(bf1 | bf2);
-}
-
 // для класса TSet
 
 //создание множества заданной мощности, Автор: Марков Александр
@@ -429,4 +422,62 @@ TEST(TSet, Test_Multiple_Operations) {
     for (int i = 0; i < 10; i++) {
         EXPECT_FALSE(intersection.IsMember(i));
     }
+}
+
+//битовое поле длины 1 (мин размер)
+TEST(TBitField, Test_Length_One) {
+    TBitField bf(1);
+    ASSERT_NO_THROW(bf.SetBit(0));
+    EXPECT_EQ(1, bf.GetBit(0));
+    ASSERT_ANY_THROW(bf.SetBit(1));
+}
+
+//битовое поле длины равной размеру одного эл-та unsigned int
+TEST(TBitField, Test_Length_Multiple_Of_32) {
+    TBitField bf(32);
+    bf.SetBit(0);
+    bf.SetBit(31);
+    EXPECT_EQ(1, bf.GetBit(0));
+    EXPECT_EQ(1, bf.GetBit(31));
+}
+
+//битовое поле длины 33 (переход через границу эл-та в 32 бита)
+TEST(TBitField, Test_Length_33) {
+    TBitField bf(33);
+    bf.SetBit(0);
+    bf.SetBit(32);
+    EXPECT_EQ(1, bf.GetBit(0));
+    EXPECT_EQ(1, bf.GetBit(32));
+}
+
+//неполный последний элемент
+TEST(TBitField, Test_Not_With_Partial_Last_Element) {
+    TBitField bf(5);  // только 5 бит из 32
+    bf.SetBit(0);
+    bf.SetBit(2);
+    TBitField res = ~bf;
+    EXPECT_EQ(0, res.GetBit(0));
+    EXPECT_EQ(1, res.GetBit(1));
+    EXPECT_EQ(0, res.GetBit(2));
+    EXPECT_EQ(1, res.GetBit(3));
+    EXPECT_EQ(1, res.GetBit(4));
+}
+
+//присваивание полей разной длины
+TEST(TBitField, Test_Assign_Different_Lengths) {
+    TBitField bf1(10);
+    bf1.SetBit(5);
+    TBitField bf2(20);
+    bf2 = bf1;
+    EXPECT_EQ(bf1.GetLength(), bf2.GetLength());
+    EXPECT_EQ(1, bf2.GetBit(5));
+}
+
+//копирование полей разной длины
+TEST(TBitField, Test_Copy_Different_Lengths) {
+    TBitField bf1(10);
+    bf1.SetBit(5);
+    TBitField bf2(bf1);
+    EXPECT_EQ(bf1.GetLength(), bf2.GetLength());
+    EXPECT_EQ(1, bf2.GetBit(5));
 }

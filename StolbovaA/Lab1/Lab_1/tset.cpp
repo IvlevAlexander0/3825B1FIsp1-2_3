@@ -1,5 +1,5 @@
-#include "tset.h"
-#include "tbitfield.h"
+#include "..\..\..\includes\Lab1\tset.h"
+#include "..\..\..\includes\Lab1\tbitfield.h"
 #include <stdexcept>
 
 using std::invalid_argument;

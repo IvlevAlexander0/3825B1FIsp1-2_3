@@ -1,4 +1,4 @@
-#include "tbitfield.h"
+#include "..\..\..\includes\Lab1\tbitfield.h"
 #include <stdexcept>
 #include <string>
 
@@ -59,8 +59,8 @@ int TBitField::GetBit(const int n) const {
 
 int TBitField::operator==(const TBitField& bf) const {
 	if (BitLen != bf.BitLen) return 0;
-	for (int i = 0; i < MemLen; ++i) {
-		if (pMem[i] != bf.pMem[i]) return 0;
+	for (int i = 0; i < BitLen; ++i) {
+		if (GetBit(i) != bf.GetBit(i)) return 0;
 	}
 	return 1;
 }
@@ -80,26 +80,31 @@ TBitField& TBitField::operator=(const TBitField& bf) {
 	}
 	return *this;
 }
-TBitField TBitField::operator|(const TBitField& bf)
-{
-	if (BitLen != bf.BitLen) {
-		throw std::invalid_argument("Операция | невозможна для полей разной длины");
+TBitField TBitField::operator|(const TBitField& bf) {
+	int maxLen = (BitLen > bf.BitLen) ? BitLen : bf.BitLen;
+	TBitField res(maxLen);
+	for (int i = 0; i < BitLen; ++i) {
+		if (GetBit(i)) {
+			res.SetBit(i);
+		}
 	}
-	TBitField res(BitLen);
-	for (int i = 0; i < MemLen; ++i) {
-		res.pMem[i] = pMem[i] | bf.pMem[i];
+	for (int i = 0; i < bf.BitLen; ++i) {
+		if (bf.GetBit(i)) {
+			res.SetBit(i);
+		}
 	}
+
 	return res;
 }
-TBitField TBitField::operator&(const TBitField& bf)
-{
-	if (BitLen != bf.BitLen) {
-		throw std::invalid_argument("Операция & невозможна для полей разной длины");
+TBitField TBitField::operator&(const TBitField& bf) {
+	int minLen = (BitLen < bf.BitLen) ? BitLen : bf.BitLen;
+	TBitField res(minLen);
+	for (int i = 0; i < minLen; ++i) {
+		if (GetBit(i) && bf.GetBit(i)) {
+			res.SetBit(i);
+		}
 	}
-	TBitField res(BitLen);
-	for (int i = 0; i < MemLen; ++i) {
-		res.pMem[i] = pMem[i] & bf.pMem[i];
-	}
+
 	return res;
 }
 TBitField TBitField::operator~(void)
@@ -116,16 +121,18 @@ TBitField TBitField::operator~(void)
 }
 std::istream& operator>>(std::istream& istr, TBitField& bf) {
 	std::string s;
-	istr >> s; // читаем слово до пробела
+	istr >> s;  // читаем слово до пробела
 	for (int i = 0; i < bf.BitLen; ++i) {
 		bf.ClrBit(i);
 	}
 	int len = std::min((int)s.length(), bf.BitLen);
 	for (int i = 0; i < len; ++i) {
+		int bitIndex = bf.BitLen - 1 - i;
 		if (s[i] == '1') {
-			bf.SetBit(i);
+			bf.SetBit(bitIndex);
 		}
 	}
+
 	return istr;
 }
 std::ostream& operator<<(std::ostream& ostr, const TBitField& bf) {
