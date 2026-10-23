@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "tbitfield.h"
-#include "tset.h"
+#include "..\..\..\includes\Lab1\tset.h"
+#include "..\..\..\includes\Lab1\tbitfield.h"
 #include <stdexcept>
 
 //геенрация случайного числа в диапазоне, Автор: Князев Никита
