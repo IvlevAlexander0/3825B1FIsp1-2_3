@@ -4,20 +4,20 @@
 
 int TBitField::GetMemIndex(const int n) const
 {
-	return n / 32;
+	return n / (sizeof(TELEM) * 8);
 }
 
 TELEM TBitField::GetMemMask(const int n) const
 {
-	return (TELEM)1 << n % 32;
+	return (TELEM)1 << n % (sizeof(TELEM) * 8);
 }
 
 TBitField::TBitField(int len)                  //                                   (#О1)
 {
 	if (len <= 0) { throw std::invalid_argument("Количество битов должно быть больше 0"); }
 	BitLen = len;
-	if (len % 32 == 0) { MemLen = len / 32; }
-	else { MemLen = len / 32 + 1; }
+	if (len % (sizeof(TELEM) * 8) == 0) { MemLen = len / (sizeof(TELEM) * 8); }
+	else { MemLen = len / (sizeof(TELEM) * 8) + 1; }
 	pMem = new TELEM[MemLen]();
 }
 
@@ -108,6 +108,10 @@ TBitField  TBitField::operator~(void)
 	TBitField res(*this);
 	for (size_t i = 0; i < MemLen; ++i) {
 		res.pMem[i] = ~pMem[i];
+	}
+	if (BitLen % (sizeof(TELEM) * 8) != 0) {
+		TELEM mask = ((TELEM)1 << BitLen % (sizeof(TELEM) * 8)) - 1;
+		res.pMem[MemLen - 1] &= mask;
 	}
 	return res;
 }

@@ -97,13 +97,27 @@ TSet TSet::operator~ (void)
 
 std::istream& operator>>(std::istream& istr, TSet& bf)
 {
-
-	istr >> bf.BitField;
+	for (int i = 0; i < bf.MaxPower; ++i) {
+		bf.DelElem(i);
+	}
+	int val;
+	while (istr >> val) {
+		if (val >= 0 && val < bf.MaxPower) {
+			bf.InsElem(val);
+		}
+	}
 	return istr;
 }
 
 std::ostream& operator<<(std::ostream& ostr, const TSet& bf)
 {
-	ostr << bf.BitField;
+	bool first = true;
+	for (int i = 0; i < bf.MaxPower; ++i) {
+		if (bf.IsMember(i)) {
+			if (!first) ostr << " ";
+			ostr << i;
+			first = false;
+		}
+	}
 	return ostr;
 }
