@@ -1,0 +1,6 @@
+﻿  pch.cpp
+  test.cpp
+C:\Users\максим\Desktop\3sem\MyLabSolution\mylib\rl_tbitfield.h(141,21): warning C4267: аргумент: преобразование из "size_t" в "const int"; возможна потеря данных
+  (компиляция исходного файла "/test.cpp")
+  
+  MylibTests.vcxproj -> C:\Users\максим\Desktop\3sem\MyLabSolution\x64\Debug\MylibTests.exe
