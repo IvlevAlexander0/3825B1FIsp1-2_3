@@ -165,6 +165,8 @@ TEST(TSTest, OperM) { //теоретико-множественные операции
     B.InsElem(2); 
     B.InsElem(3);
 
+    EXPECT_NO_THROW(A + B);
+    EXPECT_NO_THROW(A * B);
     //объединение
     TSet C = A + B;
     EXPECT_TRUE(C.IsMember(1));
@@ -196,7 +198,8 @@ TEST(TSTest, OperSrav) { //операторы сравнения
     s2.InsElem(5);
     TSet s3(10); 
     s3.InsElem(6);
-
+    EXPECT_NO_THROW(s1 == s2);
+    EXPECT_NO_THROW(s2 != s3);
     EXPECT_TRUE(s1 == s2);
     EXPECT_FALSE(s1 == s3);
     EXPECT_TRUE(s2 != s3);
@@ -219,6 +222,43 @@ TEST(TSTest, ConBF) { //преобразование типов
     EXPECT_EQ(bf2.GetBit(8), 1);
 }
 
+TEST(TSTest, Univers) { //проверка для разных универсов
+    TSet A(10);  
+    TSet B(20);  
+    A.InsElem(5);
+    B.InsElem(15);
+    
+    EXPECT_THROW(A + B, std::invalid_argument);
+    EXPECT_THROW(A * B, std::invalid_argument);
+    EXPECT_THROW(A == B, std::invalid_argument);
+    EXPECT_THROW(A != B, std::invalid_argument);
+}
+TEST(TSTest, UniversR) {
+    TSet A(10);
+    TSet B(10);  
+
+    A.InsElem(1);
+    A.InsElem(2);
+    B.InsElem(2);
+    B.InsElem(3);
+
+    EXPECT_NO_THROW(A + B);
+    EXPECT_NO_THROW(A * B);
+    EXPECT_NO_THROW(A == B);
+    EXPECT_NO_THROW(A != B);
+
+    TSet C = A + B;
+    EXPECT_EQ(C.GetMaxPower(), 10);
+    EXPECT_TRUE(C.IsMember(1));
+    EXPECT_TRUE(C.IsMember(2));
+    EXPECT_TRUE(C.IsMember(3));
+
+    TSet D = A * B;
+    EXPECT_EQ(D.GetMaxPower(), 10);
+    EXPECT_TRUE(D.IsMember(2));
+    EXPECT_FALSE(D.IsMember(1));
+    EXPECT_FALSE(D.IsMember(3));
+}
 
 
 

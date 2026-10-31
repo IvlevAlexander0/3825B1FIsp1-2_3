@@ -35,6 +35,9 @@ int TSet::IsMember(const int Elem) const {
 // теоретико-множественные операции
 // сравнение
 int TSet::operator== (const TSet& s) const {
+    if (MaxPower != s.MaxPower) {
+        throw std::invalid_argument("Error: univers not the same");
+    }
     if (BitField == s.BitField)
         return 1;
     else
@@ -42,6 +45,9 @@ int TSet::operator== (const TSet& s) const {
 }
 // сравнение
 int TSet::operator!= (const TSet& s) const {
+    if (MaxPower != s.MaxPower) {
+        throw std::invalid_argument("Error: univers not the same");
+    }
     if (BitField != s.BitField)
         return 1;
     else
@@ -71,10 +77,16 @@ TSet TSet::operator- (const int Elem) {
 }
 // объединение
 TSet TSet::operator+ (const TSet& s) {
+    if (MaxPower != s.MaxPower) {
+        throw std::invalid_argument("Error: univers not the same");
+    }
     return TSet(BitField | s.BitField);
 }
 // пересечение
 TSet TSet::operator* (const TSet& s) {
+    if (MaxPower != s.MaxPower) {
+        throw std::invalid_argument("Error: univers not the same");
+    }
     return TSet(BitField & s.BitField);
 }
 // дополнение
