@@ -1,4 +1,7 @@
 #include "tset.h"
+#include <stdexcept>
+#include <string>
+#include <sstream>
 
 TSet::TSet(int mp) : MaxPower(mp), BitField(mp) {}
 
@@ -27,6 +30,8 @@ int TSet::IsMember(const int Elem) const {
 }
 
 int TSet::operator==(const TSet& s) const {
+    if (MaxPower != s.MaxPower) 
+        return 0;
     return BitField == s.BitField;
 }
 
@@ -54,12 +59,16 @@ TSet TSet::operator-(const int Elem) {
 }
 
 TSet TSet::operator+(const TSet& s) {
+    if (MaxPower != s.MaxPower) 
+        throw std::invalid_argument("Different universes");
     TSet res(*this);
     res.BitField = BitField | s.BitField;
     return res;
 }
 
 TSet TSet::operator*(const TSet& s) {
+    if (MaxPower != s.MaxPower) 
+        throw std::invalid_argument("Different universes");
     TSet res(*this);
     res.BitField = BitField & s.BitField;
     return res;
@@ -72,7 +81,17 @@ TSet TSet::operator~(void) {
 }
 
 std::istream& operator>>(std::istream& istr, TSet& s) {
-    istr >> s.BitField;
+    std::string line;
+    if (std::getline(istr, line)) {
+        std::stringstream ss(line);
+        int elem;
+        while (ss >> elem) {
+            if (elem >= 0 && elem < s.MaxPower) {
+                s.InsElem(elem);
+            }
+            if (ss.peek() == ',') ss.get(); // пропускаем запятые
+        }
+    }
     return istr;
 }
 

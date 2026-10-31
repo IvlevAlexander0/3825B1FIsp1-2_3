@@ -180,3 +180,27 @@ TEST(TSetTest, StreamOutput) {
     oss << s;
     EXPECT_EQ(oss.str(), "{ 0, 3 }");
 }
+
+TEST(TBitFieldTest, InversionZeroLength) {
+    TBitField a(0);
+    TBitField b = ~a;
+    EXPECT_EQ(b.GetLength(), 0);
+}
+
+TEST(TSetTest, DifferentPowerThrows) {
+    TSet a(10);
+    TSet b(20);
+    EXPECT_THROW(a + b, std::invalid_argument);
+    EXPECT_THROW(a * b, std::invalid_argument);
+}
+
+TEST(TSetTest, StreamInputElements) {
+    TSet s(10);
+    std::istringstream iss("1 3, 5");
+    iss >> s;
+    
+    EXPECT_TRUE(s.IsMember(1));
+    EXPECT_TRUE(s.IsMember(3));
+    EXPECT_TRUE(s.IsMember(5));
+    EXPECT_FALSE(s.IsMember(2));
+}

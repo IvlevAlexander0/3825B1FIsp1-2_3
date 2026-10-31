@@ -93,6 +93,8 @@ TBitField TBitField::operator&(const TBitField& bf) {
 }
 
 TBitField TBitField::operator~(void) {
+    if (BitLen == 0) 
+        return TBitField(0);
     TBitField res(BitLen);
     for (int i = 0; i < MemLen; ++i)
         res.pMem[i] = ~pMem[i];
@@ -106,8 +108,10 @@ std::istream& operator>>(std::istream& istr, TBitField& bf) {
     for (int i = 0; i < bf.BitLen; ++i) {
         int bit;
         istr >> bit;
-        if (bit) bf.SetBit(i);
-        else     bf.ClrBit(i);
+        if (bit) 
+            bf.SetBit(i);
+        else     
+            bf.ClrBit(i);
     }
     return istr;
 }
