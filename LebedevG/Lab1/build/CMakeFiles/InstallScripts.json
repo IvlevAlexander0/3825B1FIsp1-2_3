@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/grigoriy/projects/3825B1FIsp1-2_3/LebedevG/Lab1/build/cmake_install.cmake",
+		"/Users/grigoriy/projects/3825B1FIsp1-2_3/LebedevG/Lab1/build/_deps/googletest-build/cmake_install.cmake",
+		"/Users/grigoriy/projects/3825B1FIsp1-2_3/LebedevG/Lab1/build/_deps/googletest-build/googlemock/cmake_install.cmake",
+		"/Users/grigoriy/projects/3825B1FIsp1-2_3/LebedevG/Lab1/build/_deps/googletest-build/googletest/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,0 +1,5 @@
+if(EXISTS "/Users/grigoriy/projects/3825B1FIsp1-2_3/LebedevG/Lab1/build/lab1_test_e3b0c442_tests.cmake")
+  include("/Users/grigoriy/projects/3825B1FIsp1-2_3/LebedevG/Lab1/build/lab1_test_e3b0c442_tests.cmake")
+else()
+  add_test(lab1_test_NOT_BUILT lab1_test_NOT_BUILT)
+endif()

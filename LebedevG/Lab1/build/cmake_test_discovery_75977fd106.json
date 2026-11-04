@@ -1,0 +1,138 @@
+{
+  "tests": 24,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "TBitFieldTest",
+      "tests": 12,
+      "testsuite": [
+        {
+          "name": "CreateAndLength",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 8
+        },
+        {
+          "name": "SetAndGetBit",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 13
+        },
+        {
+          "name": "ClearBit",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 21
+        },
+        {
+          "name": "OutOfRangeDoesNotCrash",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 28
+        },
+        {
+          "name": "Equality",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 36
+        },
+        {
+          "name": "CopyConstructor",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 46
+        },
+        {
+          "name": "AssignmentOperator",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 55
+        },
+        {
+          "name": "Union",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 63
+        },
+        {
+          "name": "Intersection",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 72
+        },
+        {
+          "name": "Inversion",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 82
+        },
+        {
+          "name": "StreamOutput",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 91
+        },
+        {
+          "name": "InversionZeroLength",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 184
+        }
+      ]
+    },
+    {
+      "name": "TSetTest",
+      "tests": 12,
+      "testsuite": [
+        {
+          "name": "CreateAndMaxPower",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 102
+        },
+        {
+          "name": "InsertAndCheck",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 107
+        },
+        {
+          "name": "DeleteElement",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 114
+        },
+        {
+          "name": "CopyAndEquality",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 121
+        },
+        {
+          "name": "AddElementOperator",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 132
+        },
+        {
+          "name": "RemoveElementOperator",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 139
+        },
+        {
+          "name": "UnionSets",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 147
+        },
+        {
+          "name": "IntersectionSets",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 156
+        },
+        {
+          "name": "Complement",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 166
+        },
+        {
+          "name": "StreamOutput",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 175
+        },
+        {
+          "name": "DifferentPowerThrows",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 190
+        },
+        {
+          "name": "StreamInputElements",
+          "file": "\/Users\/grigoriy\/projects\/3825B1FIsp1-2_3\/LebedevG\/Lab1\/test_lab1.cpp",
+          "line": 197
+        }
+      ]
+    }
+  ]
+}
