@@ -83,15 +83,8 @@ TSet TSet::operator+(const TSet& s)
 {
     if (MaxPower != s.MaxPower)
         throw std::invalid_argument("set powers different");
-
     TSet result(*this);
-
-    for (int i = 0; i < MaxPower; ++i)
-    {
-        if (s.IsMember(i))
-            result.InsElem(i);
-    }
-
+    result.BitField = BitField | s.BitField;
     return result;
 }
 
@@ -99,15 +92,8 @@ TSet TSet::operator*(const TSet& s)
 {
     if (MaxPower != s.MaxPower)
         throw std::invalid_argument("set powers different");
-
-    TSet result(MaxPower);
-
-    for (int i = 0; i < MaxPower; ++i)
-    {
-        if (IsMember(i) && s.IsMember(i))
-            result.InsElem(i);
-    }
-
+    TSet result(*this);
+    result.BitField = BitField & s.BitField;
     return result;
 }
 
@@ -119,7 +105,50 @@ TSet TSet::operator~(void)
 
 std::istream& operator>>(std::istream& istr, TSet& s)
 {
-    istr >> s.BitField;
+    char ch;
+
+    if (!(istr >> ch) || ch != '{')
+    {
+        istr.setstate(std::ios::failbit);
+        return istr;
+    }
+
+    TSet temp(s.MaxPower);
+
+    istr >> std::ws;
+
+    if (istr.peek() == '}')
+    {
+        istr.get();
+        s = temp;
+        return istr;
+    }
+
+    while (istr)
+    {
+        int elem;
+        if (!(istr >> elem))
+            return istr;
+        if (elem < 0 || elem >= s.MaxPower)
+        {
+            istr.setstate(std::ios::failbit);
+            return istr;
+        }
+        temp.InsElem(elem);
+        istr >> std::ws;
+        if (!(istr.get(ch)))
+            return istr;
+        if (ch == '}')
+        {
+            s = temp;
+            return istr;
+        }
+        if (ch != ',')
+        {
+            istr.setstate(std::ios::failbit);
+            return istr;
+        }
+    }
     return istr;
 }
 

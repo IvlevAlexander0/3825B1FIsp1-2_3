@@ -74,15 +74,14 @@ int TBitField::GetBit(const int n) const
 
 int TBitField::operator==(const TBitField& bf) const
 {
-    if (BitLen != bf.BitLen)
-        return 0;
-
-    for (int i = 0; i < MemLen; ++i)
+    const int maxMemLen = (MemLen > bf.MemLen) ? MemLen : bf.MemLen;
+    for (int i = 0; i < maxMemLen; ++i)
     {
-        if (pMem[i] != bf.pMem[i])
+        TELEM a = (i < MemLen) ? pMem[i] : 0;
+        TELEM b = (i < bf.MemLen) ? bf.pMem[i] : 0;
+        if (a != b)
             return 0;
     }
-
     return 1;
 }
 
@@ -115,27 +114,27 @@ TBitField& TBitField::operator=(const TBitField& bf)
 
 TBitField TBitField::operator|(const TBitField& bf)
 {
-    if (BitLen != bf.BitLen)
-        throw std::invalid_argument("bit field lengths different");
-
-    TBitField result(BitLen);
-
-    for (int i = 0; i < MemLen; ++i)
-        result.pMem[i] = pMem[i] | bf.pMem[i];
-
+    const int resultLen = (BitLen > bf.BitLen) ? BitLen : bf.BitLen;
+    TBitField result(resultLen);
+    for (int i = 0; i < result.MemLen; ++i)
+    {
+        TELEM a = (i < MemLen) ? pMem[i] : 0;
+        TELEM b = (i < bf.MemLen) ? bf.pMem[i] : 0;
+        result.pMem[i] = a | b;
+    }
     return result;
 }
 
 TBitField TBitField::operator&(const TBitField& bf)
 {
-    if (BitLen != bf.BitLen)
-        throw std::invalid_argument("bit field lengths different");
-
-    TBitField result(BitLen);
-
-    for (int i = 0; i < MemLen; ++i)
-        result.pMem[i] = pMem[i] & bf.pMem[i];
-
+    const int resultLen = (BitLen > bf.BitLen) ? BitLen : bf.BitLen;
+    TBitField result(resultLen);
+    for (int i = 0; i < result.MemLen; ++i)
+    {
+        TELEM a = (i < MemLen) ? pMem[i] : 0;
+        TELEM b = (i < bf.MemLen) ? bf.pMem[i] : 0;
+        result.pMem[i] = a & b;
+    }
     return result;
 }
 
