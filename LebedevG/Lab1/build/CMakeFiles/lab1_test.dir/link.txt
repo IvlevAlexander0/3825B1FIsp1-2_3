@@ -1,1 +1,0 @@
-/usr/bin/c++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/lab1_test.dir/main.cpp.o CMakeFiles/lab1_test.dir/tbitfield.cpp.o CMakeFiles/lab1_test.dir/tset.cpp.o CMakeFiles/lab1_test.dir/test_lab1.cpp.o -o lab1_test  lib/libgtest.a

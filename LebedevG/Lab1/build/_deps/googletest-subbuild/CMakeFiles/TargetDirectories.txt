@@ -1,3 +1,0 @@
-/Users/grigoriy/projects/3825B1FIsp1-2_3/LebedevG/Lab1/build/_deps/googletest-subbuild/CMakeFiles/googletest-populate.dir
-/Users/grigoriy/projects/3825B1FIsp1-2_3/LebedevG/Lab1/build/_deps/googletest-subbuild/CMakeFiles/edit_cache.dir
-/Users/grigoriy/projects/3825B1FIsp1-2_3/LebedevG/Lab1/build/_deps/googletest-subbuild/CMakeFiles/rebuild_cache.dir
