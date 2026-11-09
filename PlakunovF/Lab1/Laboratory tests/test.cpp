@@ -20,6 +20,20 @@ TEST(TBitFieldTest, copy_and_equality) {
     EXPECT_TRUE(bf1 == bf3);
 }
 
+TEST(TBitFieldTest, equality_different_lengths) {
+    TBitField a(3), b(10);
+    EXPECT_TRUE(a == b); 
+
+    b.SetBit(0);
+    EXPECT_FALSE(a == b);
+
+    a.SetBit(0);
+    EXPECT_TRUE(a == b);
+
+    b.SetBit(9); 
+    EXPECT_FALSE(a == b);
+}
+
 TEST(TBitFieldTest, negative_size_exception) {
     bool flag = false;
     try {
@@ -70,6 +84,28 @@ TEST(TBitFieldTest, bitfield_or_and) {
     EXPECT_EQ(res_and.GetBit(10), 0);
 }
 
+TEST(TBitFieldTest, or_different_lengths) {
+    TBitField a(5), b(10);
+    a.SetBit(2);
+    b.SetBit(8);
+
+    TBitField r = a | b;
+    EXPECT_EQ(r.GetLength(), 10); 
+    EXPECT_EQ(r.GetBit(2), 1);
+    EXPECT_EQ(r.GetBit(8), 1);
+}
+
+TEST(TBitFieldTest, and_different_lengths) {
+    TBitField a(10), b(5);
+    a.SetBit(2);
+    a.SetBit(8);
+    b.SetBit(2);
+
+    TBitField r = a & b;
+    EXPECT_EQ(r.GetLength(), 10);
+    EXPECT_EQ(r.GetBit(2), 1);
+    EXPECT_EQ(r.GetBit(8), 0);
+}
 TEST(TBitFieldTest, bitfield_not) {
     TBitField bf(10);
     bf.SetBit(0);
@@ -101,6 +137,16 @@ TEST(TBitFieldTest, assignment_operator) {
     EXPECT_EQ(bf2.GetLength(), 50); 
     EXPECT_EQ(bf2.GetBit(10), 1);
     EXPECT_EQ(bf2.GetBit(20), 1);
+}
+
+TEST(TBitFieldTest, self_assignment_is_safe) {
+    TBitField bf(20);
+    bf.SetBit(5);
+    TBitField& ref = bf;
+    bf = ref;
+
+    EXPECT_EQ(bf.GetLength(), 20);
+    EXPECT_EQ(bf.GetBit(5), 1);
 }
 
 TEST(TBitFieldTest, bitfield_io) {
