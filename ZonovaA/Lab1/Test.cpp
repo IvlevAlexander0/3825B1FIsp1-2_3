@@ -288,3 +288,113 @@ TEST(TSEx, InpStop) { //ввод корректно останавливается при встрече отрицательног
 }
 
 
+TEST(TBE, NLen) {
+    EXPECT_THROW(TBitField bf(-5), std::out_of_range);
+}
+TEST(TBE, ZeroLen) {
+    TBitField bf(0);
+    EXPECT_EQ(bf.GetLength(), 0);
+}
+TEST(TBE, NeBi) {
+    TBitField bf(10);
+    EXPECT_THROW(bf.SetBit(-1), std::out_of_range);
+}
+TEST(TBF, Bitout) {
+    TBitField bf(5);
+    EXPECT_THROW(bf.SetBit(5), std::out_of_range);
+    EXPECT_THROW(bf.SetBit(10), std::out_of_range);
+}
+TEST(TBF, Nbit){
+    TBitField bf(10);
+    EXPECT_THROW(bf.GetBit(-1), std::out_of_range);
+}
+TEST(TBF, Bitout2) {
+    TBitField bf(5);
+    EXPECT_THROW(bf.GetBit(5), std::out_of_range);
+    EXPECT_THROW(bf.GetBit(10), std::out_of_range);
+}
+TEST(TBF, Bitclr) {
+    TBitField bf(10);
+    EXPECT_THROW(bf.ClrBit(-1), std::out_of_range);
+}
+TEST(TBF, Bitclr2) {
+    TBitField bf(5);
+    EXPECT_THROW(bf.ClrBit(5), std::out_of_range);
+}
+TEST(TBF, Oper){
+    TBitField bf1(5);
+    TBitField bf2(10);
+
+    EXPECT_THROW(bf1 | bf2, std::invalid_argument);
+    EXPECT_THROW(bf1 & bf2, std::invalid_argument);
+    EXPECT_THROW(bf1 == bf2, std::invalid_argument);
+    EXPECT_THROW(bf1 != bf2, std::invalid_argument);
+}
+TEST(TSE, NeMaxPo) {
+    EXPECT_THROW(TSet s(-5), std::out_of_range);
+}
+TEST(TSE, NeMaxzero){
+    TSet s(0);
+    EXPECT_EQ(s.GetMaxPower(), 0);
+}
+TEST(TSE, InsEle) {
+    TSet s(10);
+    EXPECT_THROW(s.InsElem(-1), std::out_of_range);
+}
+TEST(TSE, InsEleex) {
+    TSet s(5);
+    EXPECT_THROW(s.InsElem(5), std::out_of_range);
+    EXPECT_THROW(s.InsElem(10), std::out_of_range);
+}
+TEST(TSE, Del) {
+    TSet s(10);
+    EXPECT_THROW(s.DelElem(-1), std::out_of_range);
+}
+TEST(TSE, Del2) {
+    TSet s(5);
+    EXPECT_THROW(s.DelElem(5), std::out_of_range);
+}
+TEST(TSE, S) {
+    TSet s(10);
+    EXPECT_THROW(s.IsMember(-1), std::out_of_range);
+}
+TEST(TSE, Is) {
+    TSet s(5);
+    EXPECT_THROW(s.IsMember(5), std::out_of_range);
+}
+TEST(TSE, Pust) {
+    TSet empty(5); 
+    TSet complement = ~empty;  //должно быть {0, 1, 2, 3, 4}
+    for (int i = 0; i < 5; i++) {
+        EXPECT_TRUE(complement.IsMember(i));
+    }
+}
+TEST(TSE, Poln) {
+    TSet full(5);
+    for (int i = 0; i < 5; i++) {
+        full.InsElem(i); 
+    }
+    TSet complement = ~full;
+    for (int i = 0; i < 5; i++) {
+        EXPECT_FALSE(complement.IsMember(i));
+    }
+}
+TEST(TSE, Emp) {
+    TSet A(10);
+    A.InsElem(1);
+    A.InsElem(3);
+    TSet empty(10);
+    TSet result = A + empty;
+    EXPECT_TRUE(result == A);
+}
+TEST(TSE, Emp2) {
+    TSet A(10);
+    A.InsElem(1);
+    A.InsElem(3);
+    TSet empty(10);
+    TSet result = A * empty;
+    EXPECT_EQ(result.GetMaxPower(), 10);
+    for (int i = 0; i < 10; i++) {
+        EXPECT_FALSE(result.IsMember(i));
+    }
+}

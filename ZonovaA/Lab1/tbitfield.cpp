@@ -12,6 +12,9 @@ TELEM TBitField::GetMemMask(const int n) const {
 }
 //конструктор инициализирующий 0
 TBitField::TBitField(int len) {
+	if (len < 0) {
+		throw std::out_of_range("Len bitfield is not minus");
+	}
 	BitLen = len;
 	MemLen = (len + sizeof(TELEM) * 8 - 1) / (sizeof(TELEM) * 8); //добавляем sizeof(telem)*8 - 1, чтобы было место для остатка и деление выполнялось корректно
 	pMem = new TELEM[MemLen];//создаём массив из MemLen элементов типа TELEM
@@ -38,14 +41,23 @@ int TBitField::GetLength(void) const {
 }
 //установить бит
 void TBitField::SetBit(const int n) {
+	if (n < 0 || n >= BitLen) {
+		throw std::out_of_range("Index not diapazon");
+	}
 	pMem[GetMemIndex(n)] = pMem[GetMemIndex(n)] | GetMemMask(n);
 }
 //очистить бит
 void TBitField::ClrBit(const int n) {
+	if (n < 0 || n >= BitLen) {
+		throw std::out_of_range("Index not diapazon");
+	}
 	pMem[GetMemIndex(n)] = pMem[GetMemIndex(n)] & ~GetMemMask(n);
 }
 //получить значение бита
 int  TBitField::GetBit(const int n) const {
+	if (n < 0 || n >= BitLen) {
+		throw std::out_of_range("Index not diapazon");
+	}
 	if ((pMem[GetMemIndex(n)] & GetMemMask(n)) != 0)
 		return 1;
 	else
@@ -53,6 +65,9 @@ int  TBitField::GetBit(const int n) const {
 }
 //сравнение
 int TBitField::operator==(const TBitField& bf) const {
+	if (BitLen != bf.BitLen) {
+		throw std::invalid_argument("Different len");
+	}
 	if (BitLen != bf.BitLen)
 		return 0; //если длины двух битовых полей не равны, то поля не равны
 	for (int i = 0; i < MemLen; i++) {
@@ -63,6 +78,9 @@ int TBitField::operator==(const TBitField& bf) const {
 }
 //сравнение
 int TBitField::operator!=(const TBitField& bf) const {
+	if (BitLen != bf.BitLen) {
+		throw std::invalid_argument("Different len");
+	}
 	if (BitLen == bf.BitLen) {
 		for (int i = 0; i < MemLen; i++) {
 			if (pMem[i] != bf.pMem[i])
@@ -77,20 +95,26 @@ int TBitField::operator!=(const TBitField& bf) const {
 //присваивание
 TBitField& TBitField::operator=(const TBitField& bf) {
 	if (this == &bf)
-		return *this; //если адреса совпадают — это самоприсваивание
-	delete[] pMem; //освобождаем старую память
+		return *this; // самоприсваивание
+	
+	if (BitLen != bf.BitLen) {
+		delete[] pMem;
+		BitLen = bf.BitLen;
+		MemLen = bf.MemLen;
+		pMem = new TELEM[MemLen]; 
+	}
 
-	BitLen = bf.BitLen;
-	MemLen = bf.MemLen;
-	pMem = new TELEM[MemLen];
-
-	for (int i = 0; i < MemLen; i++)
+	for (int i = 0; i < MemLen; i++) {
 		pMem[i] = bf.pMem[i];
+	}
 
 	return *this;
 }
 //операция или
 TBitField  TBitField::operator|(const TBitField& bf) {
+	if (BitLen != bf.BitLen) {
+		throw std::invalid_argument("Different len");
+	}
 	int maxLen = 0;
 	if (BitLen > bf.BitLen) maxLen = BitLen;
 	else maxLen = bf.BitLen;
@@ -115,6 +139,9 @@ TBitField  TBitField::operator|(const TBitField& bf) {
 }
 //операция "и" 
 TBitField  TBitField::operator&(const TBitField& bf) {
+	if (BitLen != bf.BitLen) {
+		throw std::invalid_argument("Different len");
+	}
 	int minLen = 0;
 	if (BitLen < bf.BitLen) minLen = BitLen;
 	else minLen = bf.BitLen;
@@ -133,8 +160,14 @@ TBitField  TBitField::operator&(const TBitField& bf) {
 //отрицание
 TBitField  TBitField::operator~(void) {
 	TBitField result(BitLen);
-	for (int i = 0; i < MemLen; i++)
+	for (int i = 0; i < MemLen; i++) {
 		result.pMem[i] = ~pMem[i];
+	}
+	
+	int tail = BitLen % (sizeof(TELEM) * 8);
+	if (tail != 0) {
+		result.pMem[MemLen - 1] &= ((TELEM)1 << tail) - 1;
+	}
 	return result;
 }
 std::istream& operator>>(std::istream& istr, TBitField& bf) {

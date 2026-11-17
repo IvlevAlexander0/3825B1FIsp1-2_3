@@ -3,7 +3,11 @@
 #include <string> 
 
 //конструктор инициализации
-TSet::TSet(int mp) :MaxPower(mp), BitField(mp) {}
+TSet::TSet(int mp) :MaxPower(mp), BitField(mp) {
+    if (mp < 0) {
+        throw std::out_of_range("Size do not minus ");
+    }
+}
 //конструктор копирования
 TSet::TSet(const TSet& s) :MaxPower(s.MaxPower), BitField(s.BitField) {}
 //конструктор преобразования типа
@@ -19,14 +23,23 @@ int TSet::GetMaxPower(void) const {
 }
 // включить элемент в множество
 void TSet::InsElem(const int Elem) {
+    if (Elem < 0 || Elem >= MaxPower) {
+        throw std::out_of_range("Element not diapazon");
+    }
     BitField.SetBit(Elem); //устанавливаем бит номера Elem
 }
 // удалить элемент из множества
 void TSet::DelElem(const int Elem) {
+    if (Elem < 0 || Elem >= MaxPower) {
+        throw std::out_of_range("Element not diapazon");
+    }
     BitField.ClrBit(Elem);
 }
 // проверить наличие элемента в множестве
 int TSet::IsMember(const int Elem) const {
+    if (Elem < 0 || Elem >= MaxPower) {
+        throw std::out_of_range("Element not diapazon");
+    }
     if (BitField.GetBit(Elem))
         return 1;
     else
@@ -101,18 +114,22 @@ TSet TSet::operator~ (void) {
     return TSet(bf);
 }
 std::istream& operator>>(std::istream& istr, TSet& bf) {
-    int n;
-    while (istr >> n) { //пока ввод успешный
-        if (n < 0) {
-            break; //сигнал конца ввода
+    for (int i = 0; i < bf.MaxPower; i++) {
+            bf.DelElem(i);
         }
-        if (n >= bf.MaxPower) { //если элемент больше или равен мощности, это ошибка логики, тк n является еще и индексом
+
+    int n;
+    while (istr >> n) { // пока ввод успешный
+        if (n < 0) {
+            break; // сигнал конца ввода
+        }
+        if (n >= bf.MaxPower) { // если элемент больше или равен мощности, это ошибка логики, тк n является еще и индексом
             throw std::out_of_range("Error input: element goes out of range this set");
         }
         bf.InsElem(n);
     }
 
-    if (istr.fail() && !istr.eof()) { //недоступный символ
+    if (istr.fail() && !istr.eof()) { // недоступный символ
         throw std::invalid_argument("Element not right");
     }
     return istr;
