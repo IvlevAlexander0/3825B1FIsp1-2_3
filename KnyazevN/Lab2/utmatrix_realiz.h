@@ -4,28 +4,36 @@
 
 template <class ValType>
 TVector<ValType>::TVector(int s, int si) {
-    if (s < 0 || s > MAX_VECTOR_SIZE)
+    if (s < 0 || s > MAX_VECTOR_SIZE) {
         throw std::out_of_range("out of range");
-    if (si < 0 || si > MAX_VECTOR_SIZE)
+    }
+    if (si < 0 || (s > 0 && si >= s) || (s == 0 && si > 0)) {
         throw std::out_of_range("out of range");
+    }
     Size = s;
     StartIndex = si;
-    if (Size > 0)
-        pVector = new ValType[Size]();
-    else
+    int count = Size - StartIndex;
+    if (count > 0) {
+        pVector = new ValType[count]();
+    }
+    else {
         pVector = nullptr;
+    }
 }
 
 template <class ValType>
 TVector<ValType>::TVector(const TVector& v) {
     Size = v.Size;
     StartIndex = v.StartIndex;
-    if (Size > 0)
-        pVector = new ValType[Size];
-    else
+    int count = Size - StartIndex;
+    if (count > 0) {
+        pVector = new ValType[count];
+        for (int i = 0; i < count; i++) {
+            pVector[i] = v.pVector[i];
+        }
+    }
+    else {
         pVector = nullptr;
-    for (int i = 0; i < Size; i++) {
-        pVector[i] = v.pVector[i];
     }
 }
 
@@ -36,7 +44,7 @@ TVector<ValType>::~TVector() {
 
 template <class ValType>
 ValType& TVector<ValType>::operator[](int pos) {
-    if (pos < StartIndex || pos >= StartIndex + Size) {
+    if (pos < StartIndex || pos >= Size) {
         throw std::out_of_range("out of range");
     }
     return pVector[pos - StartIndex];
@@ -44,7 +52,7 @@ ValType& TVector<ValType>::operator[](int pos) {
 
 template <class ValType>
 const ValType& TVector<ValType>::operator[](int pos) const {
-    if (pos < StartIndex || pos >= StartIndex + Size) {
+    if (pos < StartIndex || pos >= Size) {
         throw std::out_of_range("out of range");
     }
     return pVector[pos - StartIndex];
@@ -58,7 +66,8 @@ bool TVector<ValType>::operator==(const TVector& v) const {
     if (Size != v.Size || StartIndex != v.StartIndex) {
         return false;
     }
-    for (int i = 0; i < Size; i++) {
+    int count = Size - StartIndex;
+    for (int i = 0; i < count; i++) {
         if (pVector[i] != v.pVector[i]) {
             return false;
         }
@@ -76,20 +85,16 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector& v) {
     if (this == &v) {
         return *this;
     }
-    if (Size != v.Size) {
-        ValType* temp;
-        if (v.Size > 0) {
-            temp = new ValType[v.Size];
-        }
-        else {
-            temp = nullptr;
-        }
-        delete[] pVector; 
-        pVector = temp;  
-        Size = v.Size;
+    int oldCount = Size - StartIndex;
+    int newCount = v.Size - v.StartIndex;
+    if (oldCount != newCount) {
+        ValType* temp = (newCount > 0) ? new ValType[newCount] : nullptr;
+        delete[] pVector;
+        pVector = temp;
     }
+    Size = v.Size;
     StartIndex = v.StartIndex;
-    for (int i = 0; i < Size; i++) {
+    for (int i = 0; i < newCount; i++) {
         pVector[i] = v.pVector[i];
     }
     return *this;
@@ -98,15 +103,18 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector& v) {
 template <class ValType>
 TVector<ValType> TVector<ValType>::operator+(const ValType& val) const {
     TVector<ValType> res(*this);
-    for (int i = 0; i < Size; i++)
+    int count = Size - StartIndex;
+    for (int i = 0; i < count; i++) {
         res.pVector[i] += val;
+    }
     return res;
 }
 
 template <class ValType>
 TVector<ValType> TVector<ValType>::operator-(const ValType& val) const {
     TVector<ValType> res(*this);
-    for (int i = 0; i < Size; i++) {
+    int count = Size - StartIndex;
+    for (int i = 0; i < count; i++) {
         res.pVector[i] -= val;
     }
     return res;
@@ -115,7 +123,8 @@ TVector<ValType> TVector<ValType>::operator-(const ValType& val) const {
 template <class ValType>
 TVector<ValType> TVector<ValType>::operator*(const ValType& val) const {
     TVector<ValType> res(*this);
-    for (int i = 0; i < Size; i++) {
+    int count = Size - StartIndex;
+    for (int i = 0; i < count; i++) {
         res.pVector[i] *= val;
     }
     return res;
@@ -127,7 +136,8 @@ TVector<ValType> TVector<ValType>::operator+(const TVector& v) const {
         throw std::invalid_argument("invalid size");
     }
     TVector<ValType> res(*this);
-    for (int i = 0; i < Size; i++) {
+    int count = Size - StartIndex;
+    for (int i = 0; i < count; i++) {
         res.pVector[i] = res.pVector[i] + v.pVector[i];
     }
     return res;
@@ -139,7 +149,8 @@ TVector<ValType> TVector<ValType>::operator-(const TVector& v) const {
         throw std::invalid_argument("invalid size");
     }
     TVector<ValType> res(*this);
-    for (int i = 0; i < Size; i++) {
+    int count = Size - StartIndex;
+    for (int i = 0; i < count; i++) {
         res.pVector[i] = res.pVector[i] - v.pVector[i];
     }
     return res;
@@ -150,24 +161,25 @@ ValType TVector<ValType>::operator*(const TVector& v) const {
     if (Size != v.Size || StartIndex != v.StartIndex) {
         throw std::invalid_argument("invalid size");
     }
-    ValType res = ValType(); 
-    for (int i = 0; i < Size; i++) {
+    ValType res = ValType();
+    int count = Size - StartIndex;
+    for (int i = 0; i < count; i++) {
         res += pVector[i] * v.pVector[i];
     }
     return res;
 }
 
-
-
-
-
-template <class ValType>
-TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType>>(s) {
+inline int check_matrix_size(int s) {
     if (s < 0 || s > MAX_MATRIX_SIZE) {
         throw std::out_of_range("out of range");
     }
+    return s;
+}
+
+template <class ValType>
+TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType>>(check_matrix_size(s)) {
     for (int i = 0; i < s; i++) {
-        this->pVector[i] = TVector<ValType>(s - i, i);
+        this->pVector[i] = TVector<ValType>(s, i);
     }
 }
 
