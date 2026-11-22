@@ -36,7 +36,12 @@ TEST(Matrix, HandlesOrderOneAndRejectsInvalidOrders)
 TEST(Matrix, CopiesAndAssignsIndependentRows)
 {
     TMatrix<int> original(3);
+    original[0][0] = 2;
+    original[0][1] = -4;
+    original[0][2] = 6;
+    original[1][1] = -7;
     original[1][2] = 8;
+    original[2][2] = 10;
     TMatrix<int> copy(original);
     TMatrix<int> assigned(1);
 
@@ -47,7 +52,12 @@ TEST(Matrix, CopiesAndAssignsIndependentRows)
     assigned[1][2] = -1;
     const auto& same = original;
     original = same;
+    EXPECT_EQ(original[0][0], 2);
+    EXPECT_EQ(original[0][1], -4);
+    EXPECT_EQ(original[0][2], 6);
+    EXPECT_EQ(original[1][1], -7);
     EXPECT_EQ(original[1][2], 8);
+    EXPECT_EQ(original[2][2], 10);
     EXPECT_NE(original, copy);
     EXPECT_NE(original, assigned);
     EXPECT_NE(original, TMatrix<int>(2));

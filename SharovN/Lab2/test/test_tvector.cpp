@@ -44,6 +44,7 @@ TEST(Vector, AccessesOnlyStoredIndices)
 TEST(Vector, CopiesAndAssignsIndependentStorage)
 {
     TVector<int> original(3, 1);
+    original[1] = -3;
     original[2] = 9;
 
     TVector<int> copy(original);
@@ -56,6 +57,7 @@ TEST(Vector, CopiesAndAssignsIndependentStorage)
     assigned[2] = 5;
     const auto& same = original;
     original = same;
+    EXPECT_EQ(original[1], -3);
     EXPECT_EQ(original[2], 9);
     EXPECT_NE(copy, original);
     EXPECT_NE(assigned, original);
@@ -74,14 +76,14 @@ TEST(Vector, PerformsScalarArithmeticOnStoredElements)
     vector[2] = 1.5;
     vector[3] = -2.0;
 
-    const auto sum = vector + 2.0;
+    const auto sum = vector + 1.0;
     const auto difference = vector - 2.0;
     const auto product = vector * -2.0;
 
     EXPECT_EQ(sum.GetSize(), 4);
     EXPECT_EQ(sum.GetStartIndex(), 2);
-    EXPECT_DOUBLE_EQ(sum[2], 3.5);
-    EXPECT_DOUBLE_EQ(sum[3], 0.0);
+    EXPECT_DOUBLE_EQ(sum[2], 2.5);
+    EXPECT_DOUBLE_EQ(sum[3], -1.0);
     EXPECT_DOUBLE_EQ(difference[2], -0.5);
     EXPECT_DOUBLE_EQ(difference[3], -4.0);
     EXPECT_DOUBLE_EQ(product[2], -3.0);
