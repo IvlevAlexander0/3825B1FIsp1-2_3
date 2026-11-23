@@ -18,6 +18,5 @@
     <ClCompile Include="utmatrix.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
   </ItemGroup>
 </Project>
