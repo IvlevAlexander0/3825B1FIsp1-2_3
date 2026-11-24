@@ -18,8 +18,19 @@
     <ClCompile Include="tbitfield.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="tset.cpp">
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="tset_reliz.h">
       <Filter>Исходные файлы</Filter>
-    </ClCompile>
+    </ClInclude>
+    <ClInclude Include="tbitfield_reliz.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\includes\Lab1\tbitfield.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\includes\Lab1\tset.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

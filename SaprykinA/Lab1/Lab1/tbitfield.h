@@ -1,9 +1,9 @@
-// ÍÍÃÓ, ÂÌÊ, Êóðñ "Ìåòîäû ïðîãðàììèðîâàíèÿ-2", Ñ++, ÎÎÏ
+// ÐÐÐ“Ð£, Ð’ÐœÐš, ÐšÑƒÑ€Ñ "ÐœÐµÑ‚Ð¾Ð´Ñ‹ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ-2", Ð¡++, ÐžÐžÐŸ
 //
-// tbitfield.h - Copyright (c) Ãåðãåëü Â.Ï. 07.05.2001
-//   Ïåðåðàáîòàíî äëÿ Microsoft Visual Studio 2008 Ñûñîåâûì À.Â. (19.04.2015)
+// tbitfield.h - Copyright (c) Ð“ÐµÑ€Ð³ÐµÐ»ÑŒ Ð’.ÐŸ. 07.05.2001
+//   ÐŸÐµÑ€ÐµÑ€Ð°Ð±Ð¾Ñ‚Ð°Ð½Ð¾ Ð´Ð»Ñ Microsoft Visual Studio 2008 Ð¡Ñ‹ÑÐ¾ÐµÐ²Ñ‹Ð¼ Ð.Ð’. (19.04.2015)
 //
-// Áèòîâîå ïîëå
+// Ð‘Ð¸Ñ‚Ð¾Ð²Ð¾Ðµ Ð¿Ð¾Ð»Ðµ
 
 #pragma once
 
@@ -14,37 +14,37 @@ typedef unsigned int TELEM;
 class TBitField
 {
 private:
-	int  BitLen; // äëèíà áèòîâîãî ïîëÿ - ìàêñ. ê-âî áèòîâ
-	TELEM* pMem; // ïàìÿòü äëÿ ïðåäñòàâëåíèÿ áèòîâîãî ïîëÿ
-	int  MemLen; // ê-âî ýë-òîâ Ìåì äëÿ ïðåäñòàâëåíèÿ áèò.ïîëÿ
+  int  BitLen; // Ð´Ð»Ð¸Ð½Ð° Ð±Ð¸Ñ‚Ð¾Ð²Ð¾Ð³Ð¾ Ð¿Ð¾Ð»Ñ - Ð¼Ð°ÐºÑ. Ðº-Ð²Ð¾ Ð±Ð¸Ñ‚Ð¾Ð²
+  TELEM *pMem; // Ð¿Ð°Ð¼ÑÑ‚ÑŒ Ð´Ð»Ñ Ð¿Ñ€ÐµÐ´ÑÑ‚Ð°Ð²Ð»ÐµÐ½Ð¸Ñ Ð±Ð¸Ñ‚Ð¾Ð²Ð¾Ð³Ð¾ Ð¿Ð¾Ð»Ñ
+  int  MemLen; // Ðº-Ð²Ð¾ ÑÐ»-Ñ‚Ð¾Ð² ÐœÐµÐ¼ Ð´Ð»Ñ Ð¿Ñ€ÐµÐ´ÑÑ‚Ð°Ð²Ð»ÐµÐ½Ð¸Ñ Ð±Ð¸Ñ‚.Ð¿Ð¾Ð»Ñ
 
-	// ìåòîäû ðåàëèçàöèè
-	int   GetMemIndex(const int n) const; // èíäåêñ â pÌåì äëÿ áèòà n       (#Î2)
-	TELEM GetMemMask(const int n) const; // áèòîâàÿ ìàñêà äëÿ áèòà n       (#Î3)
+  // Ð¼ÐµÑ‚Ð¾Ð´Ñ‹ Ñ€ÐµÐ°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ð¸
+  int   GetMemIndex(const int n) const; // Ð¸Ð½Ð´ÐµÐºÑ Ð² pÐœÐµÐ¼ Ð´Ð»Ñ Ð±Ð¸Ñ‚Ð° n       (#Ðž2)
+  TELEM GetMemMask (const int n) const; // Ð±Ð¸Ñ‚Ð¾Ð²Ð°Ñ Ð¼Ð°ÑÐºÐ° Ð´Ð»Ñ Ð±Ð¸Ñ‚Ð° n       (#Ðž3)
 public:
-	TBitField(int len);                //                                   (#Î1)
-	TBitField(const TBitField& bf);    //                                   (#Ï1)
-	~TBitField();                      //                                    (#Ñ)
+  TBitField(int len);                //                                   (#Ðž1)
+  TBitField(const TBitField &bf);    //                                   (#ÐŸ1)
+  ~TBitField();                      //                                    (#Ð¡)
 
-	// äîñòóï ê áèòàì
-	int GetLength(void) const;      // ïîëó÷èòü äëèíó (ê-âî áèòîâ)           (#Î)
-	void SetBit(const int n);       // óñòàíîâèòü áèò                       (#Î4)
-	void ClrBit(const int n);       // î÷èñòèòü áèò                         (#Ï2)
-	int  GetBit(const int n) const; // ïîëó÷èòü çíà÷åíèå áèòà               (#Ë1)
+  // Ð´Ð¾ÑÑ‚ÑƒÐ¿ Ðº Ð±Ð¸Ñ‚Ð°Ð¼
+  int GetLength(void) const;      // Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð´Ð»Ð¸Ð½Ñƒ (Ðº-Ð²Ð¾ Ð±Ð¸Ñ‚Ð¾Ð²)           (#Ðž)
+  void SetBit(const int n);       // ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ð±Ð¸Ñ‚                       (#Ðž4)
+  void ClrBit(const int n);       // Ð¾Ñ‡Ð¸ÑÑ‚Ð¸Ñ‚ÑŒ Ð±Ð¸Ñ‚                         (#ÐŸ2)
+  int  GetBit(const int n) const; // Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð±Ð¸Ñ‚Ð°               (#Ð›1)
 
-	// áèòîâûå îïåðàöèè
-	int operator==(const TBitField& bf) const; // ñðàâíåíèå                 (#Î5)
-	int operator!=(const TBitField& bf) const; // ñðàâíåíèå
-	TBitField& operator=(const TBitField& bf); // ïðèñâàèâàíèå              (#Ï3)
-	TBitField  operator|(const TBitField& bf); // îïåðàöèÿ "èëè"            (#Î6)
-	TBitField  operator&(const TBitField& bf); // îïåðàöèÿ "è"              (#Ë2)
-	TBitField  operator~(void);                // îòðèöàíèå                  (#Ñ)
+  // Ð±Ð¸Ñ‚Ð¾Ð²Ñ‹Ðµ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ð¸
+  int operator==(const TBitField &bf) const; // ÑÑ€Ð°Ð²Ð½ÐµÐ½Ð¸Ðµ                 (#Ðž5)
+  int operator!=(const TBitField &bf) const; // ÑÑ€Ð°Ð²Ð½ÐµÐ½Ð¸Ðµ
+  TBitField& operator=(const TBitField &bf); // Ð¿Ñ€Ð¸ÑÐ²Ð°Ð¸Ð²Ð°Ð½Ð¸Ðµ              (#ÐŸ3)
+  TBitField  operator|(const TBitField &bf); // Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ñ "Ð¸Ð»Ð¸"            (#Ðž6)
+  TBitField  operator&(const TBitField &bf); // Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ñ "Ð¸"              (#Ð›2)
+  TBitField  operator~(void);                // Ð¾Ñ‚Ñ€Ð¸Ñ†Ð°Ð½Ð¸Ðµ                  (#Ð¡)
 
-	friend std::istream& operator>>(std::istream& istr, TBitField& bf);       //      (#Î7)
-	friend std::ostream& operator<<(std::ostream& ostr, const TBitField& bf); //      (#Ï4)
+  friend std::istream &operator>>(std::istream &istr, TBitField &bf);       //      (#Ðž7)
+  friend std::ostream &operator<<(std::ostream &ostr, const TBitField &bf); //      (#ÐŸ4)
 };
-// Ñòðóêòóðà õðàíåíèÿ áèòîâîãî ïîëÿ
-//   áèò.ïîëå - íàáîð áèòîâ ñ íîìåðàìè îò 0 äî BitLen
-//   ìàññèâ pÌåì ðàññìàòðèâàåòñÿ êàê ïîñëåäîâàòåëüíîñòü MemLen ýëåìåíòîâ
-//   áèòû â ýë-òàõ pÌåì íóìåðóþòñÿ ñïðàâà íàëåâî (îò ìëàäøèõ ê ñòàðøèì)
-// Î8 Ë2 Ï4 Ñ2
+// Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ñ Ð±Ð¸Ñ‚Ð¾Ð²Ð¾Ð³Ð¾ Ð¿Ð¾Ð»Ñ
+//   Ð±Ð¸Ñ‚.Ð¿Ð¾Ð»Ðµ - Ð½Ð°Ð±Ð¾Ñ€ Ð±Ð¸Ñ‚Ð¾Ð² Ñ Ð½Ð¾Ð¼ÐµÑ€Ð°Ð¼Ð¸ Ð¾Ñ‚ 0 Ð´Ð¾ BitLen
+//   Ð¼Ð°ÑÑÐ¸Ð² pÐœÐµÐ¼ Ñ€Ð°ÑÑÐ¼Ð°Ñ‚Ñ€Ð¸Ð²Ð°ÐµÑ‚ÑÑ ÐºÐ°Ðº Ð¿Ð¾ÑÐ»ÐµÐ´Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾ÑÑ‚ÑŒ MemLen ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð²
+//   Ð±Ð¸Ñ‚Ñ‹ Ð² ÑÐ»-Ñ‚Ð°Ñ… pÐœÐµÐ¼ Ð½ÑƒÐ¼ÐµÑ€ÑƒÑŽÑ‚ÑÑ ÑÐ¿Ñ€Ð°Ð²Ð° Ð½Ð°Ð»ÐµÐ²Ð¾ (Ð¾Ñ‚ Ð¼Ð»Ð°Ð´ÑˆÐ¸Ñ… Ðº ÑÑ‚Ð°Ñ€ÑˆÐ¸Ð¼)
+// Ðž8 Ð›2 ÐŸ4 Ð¡2

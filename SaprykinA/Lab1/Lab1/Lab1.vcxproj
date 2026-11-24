@@ -140,7 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="tbitfield.cpp" />
-    <ClCompile Include="tset.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\includes\Lab1\tbitfield.h" />
+    <ClInclude Include="..\..\..\includes\Lab1\tset.h" />
+    <ClInclude Include="tbitfield_reliz.h" />
+    <ClInclude Include="tset_reliz.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
