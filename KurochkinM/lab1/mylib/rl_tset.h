@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "C:\Users\максим\Desktop\3sem\3825B1FIsp1-2_3\includes\Lab1\tset.h"
-#include "C:\Users\максим\Desktop\3sem\3825B1FIsp1-2_3\includes\Lab1\tbitfield.h"
+#include "..\Lab1\tset.h"
+#include "..\Lab1\tbitfield.h"
 #include <stdexcept>
 
 TSet::TSet(int mp) : MaxPower(mp), BitField(mp) {}
