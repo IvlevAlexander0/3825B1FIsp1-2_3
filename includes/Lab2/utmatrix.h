@@ -37,8 +37,34 @@ public:
 
   // ввод-вывод
 
-  friend std::istream& operator>>(std::istream& in, TVector& v);
-  friend std::ostream& operator<<(std::ostream& out, const TVector& v);
+  friend std::istream& operator>>(std::istream& in, TVector& v) {
+      int size = v.GetSize();
+      int startIndex = v.GetStartIndex();
+      TVector tmp(size, startIndex);
+      for (int i = startIndex; i < size; ++i) {
+          in >> tmp[i];
+      }
+
+      if (!in.fail()) {
+          v = tmp;
+      }
+      return in;
+  }
+
+  friend std::ostream& operator<<(std::ostream& out, const TVector& v) {
+      for (int i = 0; i < v.GetSize(); ++i) {
+          if (i > 0) {
+              out << ' ';
+          }
+          if (i < v.GetStartIndex()) {
+              out << ValType{};
+          }
+          else {
+              out << v[i];
+          }
+      }
+      return out;
+  }
 };
 
 // Верхнетреугольная матрица
@@ -56,7 +82,26 @@ public:
   TMatrix  operator- (const TMatrix &mt) const;        // вычитание
 
   // ввод / вывод
-  friend std::istream& operator>>(std::istream& in, TMatrix& mt);
-  friend std::ostream& operator<<(std::ostream& out, const TMatrix& mt);
-};
+  friend std::istream& operator>>(std::istream& in, TMatrix& mt) {
+      int size = mt.GetSize();
+      TMatrix tmp(size);
+      for (int i = 0; i < size; ++i) {
+          in >> tmp[i];
+      }
 
+      if (!in.fail()) {
+          mt = tmp;
+      }
+      return in;
+  }
+
+  friend std::ostream& operator<<(std::ostream& out, const TMatrix& mt) {
+      for (int i = 0; i < mt.GetSize(); ++i) {
+          if (i > 0) {
+              out << '\n';
+          }
+          out << mt[i];
+      }
+      return out;
+  }
+};
