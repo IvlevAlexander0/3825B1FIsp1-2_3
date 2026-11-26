@@ -127,3 +127,50 @@ TEST(TMatrixTests, CopyConstructorMakesIndependentMatrix)
     EXPECT_EQ(a[0][0], 1);
     EXPECT_EQ(b[0][0], 100);
 }
+
+TEST(TVectorTests, IncompatibleVectorsThrowExceptions)
+{
+    TVector<int> a(5, 0);
+    TVector<int> b(3, 0);
+    TVector<int> c(5, 2);
+
+    // Different sizes
+    EXPECT_THROW(a + b, std::invalid_argument);
+    EXPECT_THROW(a - b, std::invalid_argument);
+
+    // Same size, but different start indices
+    EXPECT_THROW(a + c, std::invalid_argument);
+    EXPECT_THROW(a - c, std::invalid_argument);
+}
+
+TEST(TMatrixTests, SelfAssignment)
+{
+    TMatrix<int> m(3);
+
+    m[0][0] = 10;
+    m[0][1] = 20;
+    m[0][2] = 30;
+    m[1][1] = 40;
+    m[1][2] = 50;
+    m[2][2] = 60;
+
+    m = m;
+
+    EXPECT_EQ(m.GetSize(), 3);
+    EXPECT_EQ(m.GetStartIndex(), 0);
+
+    EXPECT_EQ(m[0][0], 10);
+    EXPECT_EQ(m[0][1], 20);
+    EXPECT_EQ(m[0][2], 30);
+    EXPECT_EQ(m[1][1], 40);
+    EXPECT_EQ(m[1][2], 50);
+    EXPECT_EQ(m[2][2], 60);
+}
+
+TEST(TMatrixTests, AddingMatricesOfDifferentSizesThrows)
+{
+    TMatrix<int> a(3);
+    TMatrix<int> b(4);
+
+    EXPECT_THROW(a + b, std::invalid_argument);
+}
