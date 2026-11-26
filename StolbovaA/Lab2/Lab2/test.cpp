@@ -1,7 +1,14 @@
 #include "pch.h"
 #include "utmatrix_r.h"
 
-TEST(TVectorTest, DefaultConstructor) {  // вектор с параметрами по умолчанию
+TEST(TVectorTest, InvalidStartIndex) {           // некорректный StartIndex
+    ASSERT_THROW(TVector<int> v(5, -1), std::invalid_argument);
+    ASSERT_THROW(TVector<int> v(5, 6), std::invalid_argument);
+    ASSERT_NO_THROW(TVector<int> v(5, 5));
+    TVector<int> v(5, 5);
+    EXPECT_EQ(0, v.GetSize() - v.GetStartIndex());
+}
+TEST(TVectorTest, DefaultConstructor) {       // вектор с параметрами по умолчанию
     ASSERT_NO_THROW(TVector<int> v());
     TVector<int> v;
     EXPECT_EQ(10, v.GetSize());
@@ -300,10 +307,15 @@ TEST(TMatrixTest, TwoByTwoMatrix) {  // матрица размера 2 на 2
     EXPECT_EQ(2, m[0].GetSize());
     EXPECT_EQ(2, m[1].GetSize());
 
+    EXPECT_EQ(0, m[0].GetStartIndex());
+    EXPECT_EQ(1, m[1].GetStartIndex());
+
     m[0][0] = 1; m[0][1] = 2;
     m[1][1] = 3;
 
     EXPECT_EQ(1, m[0][0]);
     EXPECT_EQ(2, m[0][1]);
     EXPECT_EQ(3, m[1][1]);
+
+    ASSERT_ANY_THROW(m[1][0]);
 }

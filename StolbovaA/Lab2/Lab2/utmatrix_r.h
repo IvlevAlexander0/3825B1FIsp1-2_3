@@ -17,6 +17,8 @@ TVector<ValType>::TVector(int s, int si) {
         throw std::invalid_argument("–азмер вектора не может быть отрицательным");
     if (s > MAX_VECTOR_SIZE)
         throw std::invalid_argument("–азмер вектора превышает MAX_VECTOR_SIZE");
+    if (si < 0 || si > s)
+        throw std::invalid_argument("Ќачальный индекс должен быть в диапазоне [0, Size]");
     Size = s;
     StartIndex = si;
     int count = Size - StartIndex;
