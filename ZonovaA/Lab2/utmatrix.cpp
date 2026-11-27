@@ -1,5 +1,7 @@
 #include "../../includes/Lab2/utmatrix.h" 
 #include <stdexcept>
+#include <utility>
+
 
 template <class ValType>
 //конструктор с параметрами
@@ -24,8 +26,14 @@ TVector<ValType>::TVector(const TVector& v) {
     Size = v.Size;
     StartIndex = v.StartIndex;
     pVector = new ValType[Size];
-    for (int i = 0; i < Size; ++i) {
-        pVector[i] = v.pVector[i];
+    try {
+        for (int i = 0; i < Size; ++i) {
+            pVector[i] = v.pVector[i];
+        }
+    }
+    catch (...) {
+        delete[] pVector;  
+        throw;             
     }
 }
 
@@ -78,17 +86,11 @@ bool TVector<ValType>::operator!=(const TVector& v) const {
 //оператор присваивания =
 template <class ValType>
 TVector<ValType>& TVector<ValType>::operator=(const TVector& v) {
-    if (this == &v) {
-        return *this;
-    }
-    if (Size != v.Size) {
-        delete[] pVector;
-        Size = v.Size;
-        pVector = new ValType[Size];
-    }
-    StartIndex = v.StartIndex;
-    for (int i = 0; i < Size; ++i) {
-        pVector[i] = v.pVector[i];
+    if (this != &v) {
+        TVector tmp(v);
+        std::swap(Size, tmp.Size);
+        std::swap(StartIndex, tmp.StartIndex);
+        std::swap(pVector, tmp.pVector);
     }
     return *this;
 }
@@ -164,10 +166,7 @@ ValType TVector<ValType>::operator*(const TVector& v) const {
 
 //конструктор матрицы
 template <class ValType>
-TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType>>(s, 0) {
-    if (s < 0 || s > MAX_MATRIX_SIZE) {
-        throw std::out_of_range("size matrix ne dopustim");
-    }
+TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType>>((s < 0 || s > MAX_MATRIX_SIZE) ? throw std::out_of_range("size matrix ne dopustim") : s, 0) {
     for (int i = 0; i < s; ++i) {
         this->pVector[i] = TVector<ValType>(s, i); // this-> обязателен, так как pVector унаследован от шаблонного базового класса.
     }
@@ -179,7 +178,18 @@ TMatrix<ValType>::TMatrix(const TMatrix& mt) : TVector<TVector<ValType>>(mt) {}
 
 //конструктор преобразования типа (из обычного вектора векторов в матрицу)
 template <class ValType>
-TMatrix<ValType>::TMatrix(const TVector<TVector<ValType>>& mt) : TVector<TVector<ValType>>(mt) {}
+TMatrix<ValType>::TMatrix(const TVector<TVector<ValType>>& mt) : TVector<TVector<ValType>>(mt) {
+    const int n = this->GetSize();
+    for (int i = 0; i < n; ++i) {
+        const TVector<ValType>& row = mt[i];  
+        if (row.GetSize() != n) {
+            throw std::invalid_argument("nevern len");
+        }
+        if (row.GetStartIndex() != i) {
+            throw std::invalid_argument("nevern index");
+        }
+    }
+}
 
 //оператор присваивания матрицы
 template <class ValType>

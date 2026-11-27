@@ -99,6 +99,25 @@ TEST(TVec, Oper) {
     ASSERT_THROW(vDif1 - vIndDif, std::invalid_argument);
     ASSERT_THROW(vDif1 * vIndDif, std::invalid_argument);
 }
+TEST(TVec, Empty) {
+    TVector<int> v1(0, 0);
+    TVector<int> v2(0, 0);
+    EXPECT_EQ(v1, v2);
+    EXPECT_NO_THROW(v1 = v2);
+    EXPECT_NO_THROW(v1 + v2);
+}
+TEST(TVec, Con) {
+    TVector<int> v(3, 0);
+    v[0] = 10;
+    v[1] = 20;
+    v[2] = 30;
+
+    const TVector<int>& cv = v;
+    EXPECT_EQ(10, cv[0]);
+    EXPECT_EQ(20, cv[1]);
+    EXPECT_EQ(30, cv[2]);
+    ASSERT_THROW(cv[3], std::out_of_range);
+}
 
 TEST(TMat, Ini) {
     ASSERT_NO_THROW(TMatrix<int> mDe);
@@ -190,4 +209,50 @@ TEST(TMat, Che) {
     EXPECT_FALSE(m1 == m3);
     EXPECT_TRUE(m1 != m3);
     EXPECT_TRUE(m1 == m1);
+}
+TEST(TMat, DeCopy) {
+    TMatrix<int> m1(3);
+    m1[0][0] = 1; m1[0][1] = 2;
+    m1[1][1] = 5;
+
+    TMatrix<int> m2(m1);
+    m2[0][0] = 99;
+
+    EXPECT_EQ(1, m1[0][0]); 
+    EXPECT_EQ(99, m2[0][0]);
+}
+TEST(TMat, Sam) {
+    TMatrix<int> m(3);
+    m[0][0] = 42;
+    m = m;
+    EXPECT_EQ(42, m[0][0]);
+}
+TEST(TMat, Empty) {
+    TMatrix<int> m1(0);
+    TMatrix<int> m2(0);
+    EXPECT_EQ(m1, m2);
+    EXPECT_NO_THROW(m1 + m2);
+    EXPECT_NO_THROW(m1 - m2);
+}
+TEST(TMat, Con) {
+    TMatrix<int> m(2);
+    m[0][0] = 1; m[0][1] = 2;
+    m[1][1] = 3;
+
+    const TMatrix<int>& cm = m;
+    EXPECT_EQ(1, cm[0][0]);
+    EXPECT_EQ(2, cm[0][1]);
+    EXPECT_EQ(3, cm[1][1]);
+    ASSERT_THROW(cm[1][0], std::out_of_range);
+}
+//некорректная структура
+TEST(TMat, InvalidConvert) {
+    TVector<TVector<int>> bad(3, 0);
+    bad[0] = TVector<int>(3, 0);
+    bad[1] = TVector<int>(3, 0);   //должно StartIndex=1
+    bad[2] = TVector<int>(3, 0);   //должно StartIndex=2
+
+    TMatrix<int>* m = nullptr;
+    ASSERT_THROW(m = new TMatrix<int>(bad), std::invalid_argument);
+    delete m;
 }
